@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shrutika's Portfolio</title>
+  <meta name="description" content="Glassy & Glittery portfolio with animated hero and tabbed profile sections." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&display=swap"
+    rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=Fira+Code:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- <link rel="stylesheet" href="styles.css"> -->
+  <style>
+    /* =====================
+       Color tokens (user provided)
+       ===================== */
+
+
+    :root {
+      --c1: #96d2ff;
+      /* soft blue */
+      --c2: #c096ff;
+      /* soft purple */
+      --c3: #ffd4f7;
+      /* soft pink */
+      --c4: #ffffff;
+      /* white */
+      --bg: linear-gradient(135deg, rgba(150, 210, 255, 0.12), rgba(192, 150, 255, 0.08));
+      --glass-blur: 12px;
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glow: 0 8px 24px rgba(153, 118, 255, 0.08);
+      --radius: 18px;
+      --max-width: 1100px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    /* =====================
+       Reset + layout
+       ===================== */
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      background: #0b0610;
+      color: var(--c4);
+    }
+
+    body {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 20px;
+      background-image: radial-gradient(circle at 10% 10%, rgba(150, 210, 255, 0.06), transparent 10%),
+        radial-gradient(circle at 90% 90%, rgba(192, 150, 255, 0.04), transparent 15%),
+        linear-gradient(180deg, #06040a 0%, #0b0610 100%);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-y: auto;
+      font-family: "Work Sans", sans-serif;
+    }
+
+    .container {
+      margin-top: 0;
+      /* width: min(100%, var(--max-width)); */
+      width: 100vw;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding: 0 10px;
+    }
+
+    /* =====================
+       Glass card
+       ===================== */
+    .card {
+      position: relative;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(var(--glass-blur));
+      box-shadow: var(--glow);
+      overflow: hidden;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* glitter background animated */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40% -20% -40% -20%;
+      background: radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.06), transparent 10%),
+        radial-gradient(circle at 30% 80%, rgba(150, 210, 255, 0.06), transparent 10%),
+        radial-gradient(circle at 80% 30%, rgba(192, 150, 255, 0.06), transparent 12%);
+      transform: rotate(5deg) scale(1.1);
+      filter: blur(10px) saturate(140%);
+      animation: drift 18s linear infinite;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: 0.9;
+    }
+
+    @keyframes drift {
+      from {
+        transform: rotate(0deg) translateX(0);
+      }
+
+      50% {
+        transform: rotate(8deg) translateX(6%);
+      }
+
+      to {
+        transform: rotate(0deg) translateX(0);
+      }
+    }
+
+    /* subtle glitter particles */
+    .glitter-wrap {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .glitter {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, rgba(255, 255, 255, 0.4) 30%);
+      opacity: 0.9;
+      transform: translate3d(0, 0, 0);
+      animation: twinkle 3s ease-in-out infinite;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        transform: scale(.6) translateY(0);
+        opacity: 0.18
+      }
+
+      50% {
+        transform: scale(1.5) translateY(-6px);
+        opacity: 1
+      }
+    }
+
+    /* =====================
+       Hero
+       ===================== */
+    .hero {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .intro {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .logo-badge {
+      font-family: 'Bitcount Grid Single', monospace;
+      width: 88px;
+      height: 88px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 20px;
+      background: linear-gradient(135deg, var(--c2), var(--c1));
+      box-shadow: 0 6px 28px rgba(150, 210, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      transform-origin: center;
+      animation: pop .9s ease both;
+      flex-shrink: 0;
+    }
+
+    #name {
+      font-family: 'Bitcount Grid Single', monospace;
+      font-size: clamp(20px, 6vw, 35px);
+      line-height: 1.1;
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(.86) rotate(-6deg);
+        opacity: 0
+      }
+
+      to {
+        transform: scale(1) rotate(0);
+        opacity: 1
+      }
+    }
+
+    .heading {
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .heading h1 {
+      margin: 0;
+      font-size: clamp(20px, 6vw, 32px);
+      color: var(--c4);
+      word-break: break-word;
+      line-height: 1.1;
+    }
+
+    .heading p {
+      margin: 8px 0 0;
+      opacity: 0.9;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: clamp(14px, 3.5vw, 16px);
+      line-height: 1.4;
+    }
+
+    /* animated role */
+    .role {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      font-weight: 600;
+      font-size: clamp(12px, 2.5vw, 14px);
+    }
+
+    /* =====================
+       Tabs (unique tab choser)
+       ===================== */
+    .tabs {
+      margin-top: 18px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .tab-btn {
+      color: rgba(255, 255, 255, 0.88);
+      position: relative;
+      display: inline-grid;
+      place-items: center;
+      padding: 10px 14px;
+      cursor: pointer;
+      border-radius: 12px;
+      font-weight: 600;
+      user-select: none;
+      transition: transform .18s ease, opacity .18s ease;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(6px);
+      font-size: clamp(12px, 3vw, 14px);
+      flex: 1;
+      min-width: 80px;
+    }
+
+    .tab-btn:hover {
+      color: rgba(255, 255, 255, 0.88);
+      transform: translateY(-4px)
+    }
+
+    .tab-btn.active {
+      color: rgba(255, 255, 255, 0.88);
+      background: linear-gradient(90deg, rgba(150, 210, 255, 0.14), rgba(192, 150, 255, 0.12));
+      box-shadow: 0 8px 30px rgba(150, 210, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    /* fancy tab selector underline */
+    .tabs-rail {
+      color: rgba(255, 255, 255, 0.88);
+      position: relative;
+      height: 6px;
+      margin-top: 14px;
+      background: transparent;
+    }
+
+    .tabs-rail .selector {
+      position: absolute;
+      height: 6px;
+      width: 120px;
+      border-radius: 999px;
+      top: 0;
+      left: 0;
+      background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+      transition: transform .36s cubic-bezier(.2, .9, .2, 1), width .28s ease;
+      box-shadow: 0 6px 24px rgba(192, 150, 255, 0.08);
+    }
+
+    /* =====================
+       Tab panels
+       ===================== */
+    .panels {
+      margin-top: 20px;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .panel {
+      padding: 18px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0.01));
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      min-height: 220px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .side-card {
+      padding: 16px;
+      border-radius: 14px;
+      position: relative;
+      top: auto;
+      height: max-content;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .skills-list {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .skill-pill {
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      font-weight: 600;
+    }
+
+    /* experience timeline */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 14px
+    }
+
+    .job {
+      padding: 12px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.005));
+      border: 1px solid rgba(255, 255, 255, 0.03)
+    }
+
+    .job h4 {
+      margin: 0 0 4px 0
+    }
+
+    .job p {
+      margin: 0;
+      opacity: 0.9
+    }
+
+    /* bullet points */
+    .bullet-point {
+      position: relative;
+      margin: 8px 0;
+      padding-left: 20px;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    .bullet-point::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--c2);
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    /* social icons */
+    .socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px
+    }
+
+    .socials a {
+      display: inline-grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* resume preview */
+    .resume-iframe {
+      width: 100%;
+      height: 400px;
+      border-radius: 12px;
+      border: 0;
+    }
+
+    .resume-actions {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px
+    }
+
+    .btn {
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--c2), var(--c1));
+      color: #06040a;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      border: 0;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn.secondary {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--c4)
+    }
+
+    .resume-actions .fas {
+      margin-right: 8px;
+    }
+
+    /* responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      .card {
+        padding: 16px;
+      }
+      
+      .hero {
+        gap: 12px;
+      }
+      
+      .intro {
+        gap: 10px;
+      }
+      
+      .logo-badge {
+        width: 50px;
+        height: 50px;
+        font-size: 14px;
+      }
+      
+      .tabs {
+        gap: 6px;
+        margin-top: 12px;
+      }
+      
+      .tab-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+      
+      .panels {
+        margin-top: 12px;
+        gap: 12px;
+      }
+      
+      .panel {
+        padding: 12px;
+        min-height: 150px;
+      }
+      
+      .side-card {
+        padding: 12px;
+      }
+      
+      .resume-iframe {
+        height: 250px;
+      }
+      
+      .skill-pill {
+        padding: 6px 8px;
+        font-size: 12px;
+      }
+      
+      .job {
+        padding: 10px;
+      }
+      
+      .job h4 {
+        font-size: 14px;
+        line-height: 1.3;
+      }
+      
+      .bullet-point {
+        font-size: 13px;
+        line-height: 1.4;
+        padding-left: 16px;
+      }
+      
+      .bullet-point::before {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 8px;
+      }
+      
+      .card {
+        padding: 12px;
+        border-radius: 12px;
+      }
+      
+      .logo-badge {
+        width: 45px;
+        height: 45px;
+        font-size: 12px;
+        border-radius: 8px;
+      }
+      
+      .heading h1 {
+        font-size: clamp(18px, 7vw, 24px);
+      }
+      
+      .heading p {
+        font-size: clamp(11px, 4vw, 14px);
+      }
+      
+      .role {
+        padding: 3px 6px;
+        font-size: 10px;
+      }
+      
+      .tab-btn {
+        padding: 5px 8px;
+        font-size: 11px;
+      }
+      
+      .resume-iframe {
+        height: 200px;
+      }
+    }
+
+    @media (min-width: 920px) {
+      .panels {
+        grid-template-columns: 1fr 500px;
+      }
+      
+      .side-card {
+        position: sticky;
+        top: 34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="glitter-wrap" aria-hidden="true">
+        <!-- random glitter pieces (generated by JS) -->
+      </div>
+
+      <div class="hero">
+        <div class="intro">
+          <div class="logo-badge">SH</div>
+          <div class="heading">
+            <h1 id="name">SHRUTIKA HILALE</h1>
+            <div style="margin-top:8px"><span class="role">SDET • Automation and Devops enthusiast</span></div>
+            <p class="muted"> Crafting seamless test automation that's as reliable as it is impressive—no flakiness, just
+              perfection!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- tabs chooser -->
+      <div class="tabs" role="tablist" aria-label="Profile sections">
+        <button class="tab-btn active" data-target="summary">Profile</button>
+        <button class="tab-btn" data-target="skills">Skills</button>
+        <button class="tab-btn" data-target="experience">Experience</button>
+        <button class="tab-btn" data-target="connect">Connect</button>
+      </div>
+
+      <div class="tabs-rail">
+        <div class="selector" id="selector"></div>
+      </div>
+
+      <div class="panels">
+        <div class="panel" id="panel-area">
+          <!-- panels switched here -->
+          <div class="panel-content" data-panel="summary">
+            <h3>Profile Summary</h3>
+            <p class="muted">
+              I'm a <strong>Software Development Engineer in Test (SDET)</strong> with <strong>2+ years</strong> of experience in the <strong>Healthcare and Wellness domain</strong>, driving <strong>quality automation</strong> across <strong>web</strong>, <strong>mobile</strong>, and <strong>API platforms</strong>. I've built and optimized frameworks using <strong>Selenium</strong>, <strong>Playwright</strong>, <strong>Appium</strong>, and <strong>RestAssured</strong>, cutting <strong>manual QA effort</strong> by <strong>70%</strong> and accelerating <strong>regression cycles</strong>. To ensure robust code quality, I integrate <strong>AI code review assistants</strong> like <strong>Code Ant</strong> and <strong>Rabbit</strong> into the pipeline, actively utilizing <strong>Cursor</strong>, <strong>Copliot</strong> high-speed test automation and code optimization</strong>.
+            </p></p>
+          </div>
+
+          <div class="panel-content" data-panel="skills" style="display:none">
+            <h3>Skills</h3>
+            <div class="skills-list" aria-hidden="false">
+              <div class="skill-pill">Selenium</div>
+              <div class="skill-pill">Playwright</div>
+              <div class="skill-pill">Appium</div>
+              <div class="skill-pill">Java</div>
+              <div class="skill-pill">JavaScript</div>
+              <div class="skill-pill">RestAssured</div>
+              <div class="skill-pill">CI/CD</div>
+              <div class="skill-pill">ELK</div>
+              <div class="skill-pill">MongoDb</div>
+              <div class="skill-pill">MySql</div>
+              <div class="skill-pill">Regression Testing</div>
+              <div class="skill-pill">Functional Testing</div>
+              <div class="skill-pill">Sanity Testing</div>
+              <div class="skill-pill">Azure Devops</div>
+              <div class="skill-pill">SAS</div>
+              <div class="skill-pill">REST API</div>
+              <div class="skill-pill">API Automation</div>
+              <div class="skill-pill">Mobile Testing</div>
+              <div class="skill-pill">Bug/Defect Report</div>
+              <div class="skill-pill">TestNG</div>
+              <div class="skill-pill">Maven</div>
+              <div class="skill-pill">Intellij</div>
+              <div class="skill-pill">Vs Code</div>
+              <div class="skill-pill">Postman</div>
+              <div class="skill-pill">Prod Monitoring Alerts</div>
+            </div>
+          </div>
+
+          <div class="panel-content" data-panel="experience" style="display:none">
+            <h3>Experience</h3>
+            <div class="timeline">
+              <div class="job">
+                <h4>Software Developmenet Engineer in Test - Bajaj Finserv Health <span class="small muted">(2024 -
+                    Present)</span></h4>
+                <p class="bullet-point">As an Associate SDET at Bajaj Finserv Health from June 2024 to the present, I
+                  specialize in improving system reliability and testing efficiency.</p>
+                <p class="bullet-point">My key contributions include engineering automated production monitoring using
+                  ELK and custom health checks, which drastically reduced production bugs (up to 70%) and alert
+                  resolution time (50%).</p>
+                <p class="bullet-point">I also developed a cross-platform Appium driver for iOS and automated end-to-end
+                  API regression suites, significantly cutting down testing execution time and maintenance efforts.</p>
+              </div>
+              <div class="job">
+                <h4>SDET Intern — Bajaj Finserv Health <span class="small muted">(2023 - 2024)</span></h4>
+                <p class="bullet-point">During my SDET Internship at Bajaj Finserv Health, I played a key role in
+                  improving software quality and release stability.</p>
+                <p class="bullet-point">I automated full end-to-end regression suites, which led to a 60% drop in
+                  production defects and faster time-to-market. </p>
+                <p class="bullet-point">My work included triaging 25+ critical UAT bugs to achieve zero P0 production
+                  defects during release cycles, designing efficient test data automation, and integrating regression
+                  suites into CI/CD pipelines for continuous quality assurance.</p>
+                <p class="bullet-point">I also enhanced testing speed by implementing parallel android device execution
+                  and conducting root cause analysis to prevent recurring issues.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-content" data-panel="connect" style="display:none">
+            <h3>Connect</h3>
+            <p class="muted">Reach out on social or send a quick note. I respond to friendly messages!</p>
+            <div class="socials">
+              <a href="https://www.linkedin.com/in/shrutikahilale24/" title="LinkedIn" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" style="background: #0063b4; color: white; border: 1px solid var(--c4);">in</a>
+              <a href="mailto:shrutikahilale@gmail.com" title="Email" aria-label="Email" target="_blank" rel="noopener noreferrer" style="background:#ff5e42; color: white; border: 1px solid var(--c4);">@</a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="side-card">
+          <h4 style="margin:0 0 8px 0">Resume</h4>
+          <iframe id="resumeFrame" class="resume-iframe"
+            src="https://drive.google.com/file/d/1EH0CPhMhUHY_LrI6bQ5oL0aRB7hSPpAw/preview"
+            title="Resume preview"></iframe>
+          <div class="resume-actions">
+            <a id="downloadResume" class="btn"
+              href="https://drive.google.com/uc?export=download&id=1Y1oxRYfhuXg1-sotU8VICwkL5L0Gr_Ns" target="_blank"
+              rel="noopener" download="Shrutika_Hilale_SDET.pdf"> Download Resume
+              <i class="fas fa-download"></i>
+            </a>
+          </div>
+        </aside>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ====== TABS UI ======
+    const tabs = [...document.querySelectorAll('.tab-btn')];
+    const contents = [...document.querySelectorAll('.panel-content')];
+    const selector = document.getElementById('selector');
+
+    function placeSelector(el) {
+      const rail = document.querySelector('.tabs');
+      const rect = el.getBoundingClientRect();
+      const railRect = rail.getBoundingClientRect();
+      const left = rect.left - railRect.left;
+      selector.style.transform = `translateX(${left}px)`;
+      selector.style.width = rect.width + 'px';
+    }
+
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => {
+        tabs.forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        const target = t.dataset.target;
+        contents.forEach(c => c.style.display = (c.dataset.panel === target) ? 'block' : 'none');
+        placeSelector(t);
+      });
+    });
+
+    // initial selector placement
+    window.addEventListener('load', () => {
+      const active = document.querySelector('.tab-btn.active');
+      placeSelector(active);
+    });
+    window.addEventListener('resize', () => {
+      const active = document.querySelector('.tab-btn.active');
+      placeSelector(active);
+    });
+
+    // ====== Glitter pieces generation ======
+    const wrap = document.querySelector('.glitter-wrap');
+    for (let i = 0; i < 28; i++) {
+      const g = document.createElement('div'); g.className = 'glitter';
+      const x = Math.random() * 100; const y = Math.random() * 100;
+      g.style.left = x + '%'; g.style.top = y + '%';
+      const s = 2 + Math.random() * 8; g.style.width = s + 'px'; g.style.height = s + 'px';
+      g.style.animationDuration = (2 + Math.random() * 4) + 's';
+      g.style.opacity = 0.3 + Math.random() * 0.9;
+      wrap.appendChild(g);
+    }
+
+    // ====== Resume ID apply ======
+    const applyBtn = document.getElementById('applyId');
+    const field = document.getElementById('gdField');
+    const frame = document.getElementById('resumeFrame');
+    const downloadBtn = document.getElementById('downloadResume');
+    const openBtn = document.getElementById('openResume');
+
+    function applyFileId(id) {
+      if (!id) return alert('Please paste your Drive FILE_ID (looks like a long string).');
+      const preview = `https://drive.google.com/file/d/1Y1oxRYfhuXg1-sotU8VICwkL5L0Gr_Ns/view?usp=sharing`;
+      const download = `https://drive.google.com/file/d/1Y1oxRYfhuXg1-sotU8VICwkL5L0Gr_Ns/view?usp=sharing`;
+      frame.src = preview;
+      downloadBtn.href = download;
+      openBtn.onclick = () => window.open(preview, '_blank');
+      // small visual confirmation
+      applyBtn.textContent = 'Applied'; setTimeout(() => applyBtn.textContent = 'Apply', 1500);
+    }
+    applyBtn.addEventListener('click', () => applyFileId(field.value.trim()));
+
+    openBtn.addEventListener('click', () => window.open(frame.src, '_blank'));
+
+    // allow enter key
+    field.addEventListener('keydown', (e) => { if (e.key === 'Enter') applyFileId(field.value.trim()); });
+
+    // ====== Small personalization helpers (you can edit these directly) ======
+    // Change name and role via JS easily
+    // document.getElementById('name').textContent = 'Your Name';
+
+  </script>
+</body>
+
+</html>
